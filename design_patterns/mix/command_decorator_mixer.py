@@ -53,7 +53,7 @@ class SingleUndoCommand(UndoableVolumeCommand):  # ConcreteDecorator
 
     def __init__(self, command: VolumeCommand):
         super().__init__(command)
-        self.prev_state = None  # type: Union[int, None]
+        self.prev_state: Union[int, None] = None
 
     def do_action(self) -> None:
         self.prev_state = self.receiver.curr_volume

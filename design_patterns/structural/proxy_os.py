@@ -1,7 +1,7 @@
 import abc
 
 from enum import Enum
-from typing import List
+from typing import List, Set
 
 
 class UserType(Enum):
@@ -12,7 +12,7 @@ class UserType(Enum):
 class User:
     
     def __init__(self, user_type: UserType):
-        self.user_type = user_type
+        self.user_type: UserType = user_type
 
 
 class FileSystem(abc.ABC):  # Subject
@@ -33,7 +33,7 @@ class FileSystem(abc.ABC):  # Subject
 class OSFileSystem(FileSystem):  # RealSubject
     
     def __init__(self):
-        self.files = set()
+        self.files: Set[str] = set()
     
     def list_files(self) -> List[str]:
         return list(self.files)
