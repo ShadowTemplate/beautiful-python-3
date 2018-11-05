@@ -2,7 +2,7 @@ import random
 import unittest
 
 from collections import Counter
-from sorting import counting_sort
+from sorting import counting_sort, merge_sort
 
 
 class TestCountingSort(unittest.TestCase):
@@ -20,11 +20,12 @@ class TestCountingSort(unittest.TestCase):
         for length in range(max_length + 1):
             for _ in range(length * repetitions_per_length):
                 array = [random.randint(*int_range) for _ in range(length)]
+                array_rep = str(array)
                 count_sorted = counting_sort(array, id_fn)
                 sorted_array = array.sort()
                 self.assertEqual(
                     array, count_sorted, 
-                    "Error while sorting {}".format(array))
+                    "Error while sorting {}".format(array_rep))
 
         # test sort with mod key function
         mod3_fn = lambda x: x % 3
@@ -49,6 +50,27 @@ class TestCountingSort(unittest.TestCase):
                         "Error while sorting {}.\nWrong items: {}".format(
                             array, slice_count))
                     start_index = end_index
+
+
+class TestMergeSort(unittest.TestCase):
+    
+    def test_merge_sort(self):
+        random.seed(42)
+        max_length = 10
+        repetitions_per_length = 1000
+        int_range = (-50, 50)
+        
+        # generate random lists of integers of variable length
+        for length in range(max_length + 1):
+            for _ in range(length * repetitions_per_length):
+                array = [random.randint(*int_range) for _ in range(length)]
+                array_rep = str(array)
+                array_copy = array.copy()
+                array.sort()
+                merge_sort(array_copy)
+                self.assertEqual(
+                    array, array_copy, 
+                    "Error while sorting {}".format(array_rep))
 
 
 if __name__ == "__main__":

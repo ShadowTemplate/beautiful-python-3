@@ -174,12 +174,13 @@ class TestQuicksort(unittest.TestCase):
         for length in range(max_length + 1):
             for _ in range(length * repetitions_per_length):
                 array = [random.randint(*int_range) for _ in range(length)]
+                array_rep = str(array)
                 array_copy = array.copy()
                 quicksort(array)
                 array_copy.sort()
                 self.assertEqual(
                     array, array_copy, 
-                    "Error while sorting {}".format(array))
+                    "Error while sorting {}".format(array_rep))
 
 
 class TestQuickselect(unittest.TestCase):
@@ -201,12 +202,13 @@ class TestQuickselect(unittest.TestCase):
             for _ in range(length * repetitions_per_length):
                 for j in range(1, length + 1):  # test every position
                     array = [random.randint(*int_range) for _ in range(length)]
+                    array_rep = str(array)
                     array_copy = array.copy()
                     array_copy.sort()
                     self.assertEqual(
                         quickselect(array, j), array_copy[j - 1],
                         "Error while picking {}-th minimum from {}".format(
-                            j, array))
+                            j, array_rep))
 
 
 class TestMedianOfMedians(unittest.TestCase):
@@ -228,12 +230,13 @@ class TestMedianOfMedians(unittest.TestCase):
             for _ in range(length * repetitions_per_length):
                 for j in range(1, length + 1):  # test every position
                     array = [random.randint(*int_range) for _ in range(length)]
+                    array_rep = str(array)
                     array_copy = array.copy()
                     array_copy.sort()
                     self.assertEqual(
                         median_of_medians(array, j), array_copy[j - 1],
                         "Error while picking {}-th minimum from {}".format(
-                            j, array))
+                            j, array_rep))
 
 
 if __name__ == "__main__":
