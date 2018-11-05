@@ -1,6 +1,6 @@
 import abc
 
-from typing import Union
+from typing import Optional
 
 
 class VolumeController:  # Receiver
@@ -53,7 +53,7 @@ class SingleUndoCommand(UndoableVolumeCommand):  # ConcreteDecorator
 
     def __init__(self, command: VolumeCommand):
         super().__init__(command)
-        self.prev_state: Union[int, None] = None
+        self.prev_state: Optional[int] = None
 
     def do_action(self) -> None:
         self.prev_state = self.receiver.curr_volume

@@ -75,7 +75,7 @@ class BFSIterator(GraphIterator):  # ConcreteIterator
         
         head_id = self.queue.pop(0)
         adj_ids = [n.node_id for n in 
-                    self.graph.get_adjacents(self.graph.nodes[head_id])]
+                   self.graph.get_adjacents(self.graph.nodes[head_id])]
         self.queue.extend([i for i in adj_ids if not self.visited[i]])
         self.visited[head_id] = True
         return self.graph.nodes[head_id]
