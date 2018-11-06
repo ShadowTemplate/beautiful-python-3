@@ -66,9 +66,9 @@ def merge_sort(array: List[ItemType], start: Optional[int]=None,
     Worst: O(n * log n)
     
     Space complexity analysis:
-    Best: O(n) + additional space required by merge_adjacent_sub_arrays
-    Average: O(n) + additional space required by merge_adjacent_sub_arrays
-    Worst: O(n) + additional space required by merge_adjacent_sub_arrays
+    Best: O(n) + additional space required by merge_adjacent_runs
+    Average: O(n) + additional space required by merge_adjacent_runs
+    Worst: O(n) + additional space required by merge_adjacent_runs
     """
     
     start = 0 if start is None else start
@@ -80,12 +80,12 @@ def merge_sort(array: List[ItemType], start: Optional[int]=None,
     half = (start + end) // 2
     merge_sort(array, start, half)
     merge_sort(array, half + 1, end)
-    merge_adjacent_sub_arrays(array, start, half, end)
+    merge_adjacent_runs(array, start, half, end)
 
 
-def merge_adjacent_sub_arrays(array: List[ItemType], start: int, half: int, 
+def merge_adjacent_runs(array: List[ItemType], start: int, half: int, 
                        end: int) -> None:
-    """In-place merge two sorted adjacent sub-arrays in the ranges 
+    """In-place merge two sorted adjacent sub-arrays (runs) in the ranges 
     [start, half] and [half + 1, end] by using a temporary deque as buffer.
     
     In the best case (all the items in the first sub-array are smaller than 
