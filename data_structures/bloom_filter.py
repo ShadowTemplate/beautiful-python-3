@@ -7,16 +7,17 @@ from BitVector import BitVector
 FilterItem = str
 
 class BloomFilter:
-    # Bloom Filter.
-    # ref: https://en.wikipedia.org/wiki/Bloom_filter
+    """"Bloom Filter.
+    ref: https://en.wikipedia.org/wiki/Bloom_filter
     
-    # For a given false positive probability p, the length of a Bloom filter m 
-    # is proportionate to the number of elements being filtered n:
-    # m = -(n*log p)/(log2 2)^2 
-    # The required number of hash functions k only depends on the target p:
-    # k = -log2 p
-    # For a given m and n, the k that minimizes p is:
-    # k = (m/n)*log 2
+    For a given false positive probability p, the length of a Bloom filter m is 
+    proportionate to the number of elements being filtered n:
+    m = -(n*log p)/(log2 2)^2 
+    The required number of hash functions k only depends on the target p:
+    k = -log2 p
+    For a given m and n, the k that minimizes p is:
+    k = (m/n)*log 2
+    """
 
     def __init__(self, m: int, *hash_fns: Callable[[FilterItem], int]):
         assert m > 0
