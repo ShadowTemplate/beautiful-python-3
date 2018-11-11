@@ -1,8 +1,13 @@
 from collections import defaultdict
 from math import ceil
 from collections import deque
+from typing import Callable, Deque, Dict, List, Optional
 
-def counting_sort(array, key_fn):
+
+ItemType = int
+
+def counting_sort(array: List[ItemType], key_fn: Callable[[ItemType], int]) \
+    -> List[ItemType]:
     """Counting sort algorithm.
     ref: https://en.wikipedia.org/wiki/Counting_sort
     
@@ -25,7 +30,7 @@ def counting_sort(array, key_fn):
     Worst: O(n+k)
     """
     
-    counts = defaultdict(int)  # frequencies histogram
+    counts: Dict[int, int] = defaultdict(int)  # frequencies histogram
     k = 0
     for i in array:
         key_value = key_fn(i)
@@ -47,7 +52,8 @@ def counting_sort(array, key_fn):
     return sorted_array
 
 
-def merge_sort(array, start=None, end=None):
+def merge_sort(array: List[ItemType], start: Optional[int]=None,
+               end: Optional[int]=None) -> None:
     """Merge sort algorithm.
     ref: https://en.wikipedia.org/wiki/Merge_sort
     
@@ -77,7 +83,8 @@ def merge_sort(array, start=None, end=None):
     merge_adjacent_runs(array, start, half, end)
 
 
-def merge_adjacent_runs(array, start, half, end):
+def merge_adjacent_runs(array: List[ItemType], start: int, half: int, 
+                       end: int) -> None:
     """In-place merge two sorted adjacent sub-arrays (runs) in the ranges 
     [start, half] and [half + 1, end] by using a temporary deque as buffer.
     
@@ -103,7 +110,7 @@ def merge_adjacent_runs(array, start, half, end):
     
     # this deque will act as a buffer for the items in the range [start, half]
     # items will be moved from the first sub-array to the deque only if needed
-    aux = deque()
+    aux: Deque = deque()
     # rather than comparing the first sub-array with the second one, we will 
     # compare the deque and the second sub-array
     aux.append(array[start])

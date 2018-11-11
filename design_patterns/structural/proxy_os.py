@@ -32,7 +32,7 @@ class FileSystem(abc.ABC):  # Subject
 
 class OSFileSystem(FileSystem):  # RealSubject
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.files: Set[str] = set()
     
     def list_files(self) -> List[str]:
@@ -55,7 +55,7 @@ class AuthenticatedUserFileSystem(FileSystem):  # (protection) Proxy
     
     def __init__(self, user: User):
         self.user = user.user_type
-        self.fs = OSFileSystem()
+        self.fs: FileSystem = OSFileSystem()
     
     def list_files(self) -> List[str]:
         return self.fs.list_files()
@@ -91,7 +91,7 @@ class Client:
             print("Unable to remove file {}.".format(name))
 
 
-def main():
+def main() -> None:
     aufs = AuthenticatedUserFileSystem(User(UserType.USER))
     user_client = Client(aufs)
     user_client.create_file("foo.txt")

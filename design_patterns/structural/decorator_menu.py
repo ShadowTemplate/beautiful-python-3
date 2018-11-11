@@ -1,5 +1,7 @@
 import abc
 
+from typing import List
+
 
 class MenuConsumation(abc.ABC):  # (abstract) Component
     
@@ -7,7 +9,7 @@ class MenuConsumation(abc.ABC):  # (abstract) Component
     def get_price(self) -> float:
         pass
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "{} ({} $)".format(self.__class__.__name__, self.get_price())
     
 
@@ -31,7 +33,7 @@ class ConsumationWithExtra(MenuConsumation):  # (abstract) Decorator
     def get_price(self) -> float:
         return self.consumation.get_price()
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "{} + {}".format(repr(self.consumation), super().__repr__())
     
 
@@ -55,8 +57,8 @@ class ExtraKetchup(ConsumationWithExtra):  # ConcreteDecorator
 
 class ShopClient:
     
-    def __init__(self):
-        self.order = []
+    def __init__(self) -> None:
+        self.order: List[MenuConsumation] = []
         
     def add_consumation(self, consumation: MenuConsumation) -> None:
         self.order.append(consumation)
@@ -68,7 +70,7 @@ class ShopClient:
         print("Total: {} $".format(sum([c.get_price() for c in self.order])))
         
 
-def main():
+def main() -> None:
     shop = ShopClient()
     shop.add_consumation(ExtraMaionnaise(FrenchFries()))
     shop.add_consumation(ExtraMaionnaise(ExtraKetchup(CheeseBurger())))

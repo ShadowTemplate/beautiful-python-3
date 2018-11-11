@@ -122,9 +122,9 @@ def quicksort(array, start=None, end=None, pivot_fn=average_pivot):
     if pivot_index - 1 - start <= end - pivot_index + 1:  # left part smaller
         quicksort(array, start, pivot_index - 1, pivot_fn)
         quicksort(array, pivot_index + 1, end, pivot_fn)  # tail call
-    else:  # right part smaller
-        quicksort(array, pivot_index + 1, end, pivot_fn)
-        quicksort(array, start, pivot_index - 1, pivot_fn)  # tail call
+    # right part smaller
+    quicksort(array, pivot_index + 1, end, pivot_fn)
+    quicksort(array, start, pivot_index - 1, pivot_fn)  # tail call
 
 
 def quickselect(array, k, pivot_fn=average_pivot):

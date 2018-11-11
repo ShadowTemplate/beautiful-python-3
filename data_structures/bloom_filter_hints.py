@@ -1,7 +1,10 @@
 from hashlib import md5
 from itertools import chain
+from typing import Callable, List
 from BitVector import BitVector
 
+
+FilterItem = str
 
 class BloomFilter:
     """"Bloom Filter.
@@ -16,17 +19,17 @@ class BloomFilter:
     k = (m/n)*log 2
     """
 
-    def __init__(self, m, *hash_fns):
+    def __init__(self, m: int, *hash_fns: Callable[[FilterItem], int]):
         assert m > 0
         
         self.m = m
         # initialize a bit vector of size m with all 0s
-        self.bits = BitVector(intVal=0, size=m)
+        self.bits = BitVector(intVal=0, size=m)  # type: ignore
         self.hash_fns = list(hash_fns)
         
         assert len(self.hash_fns) > 0
     
-    def add(self, item):
+    def add(self, item: FilterItem) -> None:
         """Time complexity analysis:
         Best: O(k)
         Average: O(k)
@@ -41,7 +44,7 @@ class BloomFilter:
         for hf in self.hash_fns:
             self.bits[hf(item) % self.m] = 1
     
-    def __contains__(self, item):
+    def __contains__(self, item: FilterItem) -> bool:
         """Probability of false positive circa (1-e^(-kn/m))^k
         
         Time complexity analysis:
@@ -55,17 +58,18 @@ class BloomFilter:
         Worst: O(m)
         """
         
-        return all(map(lambda hf: self.bits[hf(item) % self.m], self.hash_fns))
+        res: bool = all(map(lambda hf: self.bits[hf(item) % self.m], self.hash_fns))
+        return res
 
 
-def md5_to_int(item):
+def md5_to_int(item: FilterItem) -> int:
     return int(md5(item.encode('utf-8')).hexdigest(), 16)
 
 
-def main():
+def main() -> None:
     bloom_filter = BloomFilter(13, md5_to_int)
-    present_values = ["these", "values", "are", "ok"]
-    absent_values = ["---", "but", "those", "should", "not"]
+    present_values: List[FilterItem] = ["these", "values", "are", "ok"]
+    absent_values: List[FilterItem] = ["---", "but", "those", "should", "not"]
     
     for i in present_values:
         bloom_filter.add(i)

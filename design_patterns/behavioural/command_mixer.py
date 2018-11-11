@@ -1,5 +1,7 @@
 import abc
 
+from typing import List, Optional
+
 
 class VolumeController:  # Receiver
     
@@ -22,7 +24,7 @@ class VolumeController:  # Receiver
     def mute_volume(self) -> None:
         self.curr_volume = self.min_volume
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Volume: {}".format(self.curr_volume)
 
 
@@ -90,15 +92,15 @@ class GUIButton:  # Invoker
         print("Clicked: {}".format(self.label))
         self.command.do_action()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.label
 
 
 class VolumeControlGUI:  # Client
     
-    def __init__(self):
-        self.buttons = []
-        self.last_index = None
+    def __init__(self) -> None:
+        self.buttons: List[GUIButton] = []
+        self.last_index: Optional[int] = None
         
     def add_button(self, button: GUIButton) -> None:
         self.buttons.append(button)
@@ -107,11 +109,11 @@ class VolumeControlGUI:  # Client
         self.buttons[i].on_click()
         self.last_index = i
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "GUI buttons: {}".format(self.buttons)
 
 
-def main():
+def main() -> None:
     volume_controller = VolumeController(0, 100)
     volume_controller_gui = VolumeControlGUI()
     

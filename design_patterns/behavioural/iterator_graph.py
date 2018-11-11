@@ -14,13 +14,13 @@ class Node:
         self.value: NodeValue = value
         Node.curr_id += 1
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "{}({})".format(self.value, self.node_id)
 
 
 class Graph:
     
-    def __init__(self):
+    def __init__(self) -> None:
         self.nodes: Dict[NodeId, Node] = {}
         self.adjacents: Dict[NodeId, List[NodeId]] = {}
         
@@ -36,7 +36,7 @@ class Graph:
     def get_adjacents(self, node: Node) -> List[Node]:
         return [self.nodes[i] for i in self.adjacents[node.node_id]]
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         nodes_rep = ["{}: {}".format(n, self.adjacents[i]) 
                      for i, n in self.nodes.items()]
         return "Graph: {}".format("\n".join(nodes_rep))
@@ -162,7 +162,7 @@ class GraphExplorer:  # Client
         print("Traversal: {}".format(", ".join(visited)))
 
 
-def main():
+def main() -> None:
     graph = Graph()
     alex = Node("Alex")
     barbara, becky, bruce = Node("Barbara"), Node("Becky"), Node("Bruce")
@@ -210,7 +210,7 @@ def main():
     #              |
     #             Dafne
 
-    traversal = BFSTraversal(graph, alex)
+    traversal: GraphTraversal = BFSTraversal(graph, alex)
     graph_explorer = GraphExplorer(traversal)
     graph_explorer.explore()
     # Traversal: Alex(0), Barbara(1), Becky(2), Bruce(3), Carl(4), 

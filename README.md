@@ -2,9 +2,9 @@
 
 A collection of beautiful Python 3 pieces of code. 
 
-This repository contains a wide range of algorithms, design patterns and other
-interesting or beautiful pieces of code. Its goal is both to test new language
-features and to keep track of reusable software components.
+This repository contains a wide range of algorithms, data structures, design 
+patterns and other interesting or beautiful pieces of code. Its goal is both to 
+test new language features and to keep track of reusable software components.
 
 ---
 ## Information

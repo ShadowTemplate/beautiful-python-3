@@ -1,6 +1,6 @@
 import abc
 
-from typing import Optional
+from typing import cast, List, Optional
 
 
 class VolumeController:  # Receiver
@@ -24,7 +24,7 @@ class VolumeController:  # Receiver
     def mute_volume(self) -> None:
         self.curr_volume = self.min_volume
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "Volume: {}".format(self.curr_volume)
 
 
@@ -121,7 +121,7 @@ class GUIButton:  # Invoker
         print("Clicked: {}".format(self.label))
         self.command.do_action()
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return self.label
     
 
@@ -135,15 +135,15 @@ class UndoableGUIButton(GUIButton):  # Invoker
         print("Canceled: {}".format(self.label))
         self.command.undo_action()
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "U({})".format(self.label)
 
 
 class VolumeControlGUI:  # Client
     
-    def __init__(self):
-        self.buttons = []
-        self.last_index = None
+    def __init__(self) -> None:
+        self.buttons: List[GUIButton] = []
+        self.last_index: Optional[int] = None
         
     def add_button(self, button: GUIButton) -> None:
         self.buttons.append(button)
@@ -153,21 +153,22 @@ class VolumeControlGUI:  # Client
         self.last_index = i
         
     def cancel(self) -> None:
-        if self.last_index == None or self.last_index >= len(self.buttons):
+        if self.last_index == None or cast(
+            int, self.last_index) >= len(self.buttons):
             raise RuntimeError("Unable to cancel action.")
         
-        last_button = self.buttons[self.last_index]
+        last_button = self.buttons[cast(int, self.last_index)]
         if isinstance(last_button, UndoableGUIButton):
             last_button.cancel()
             self.last_button = None
         else:
             print("Unable to undo {}".format(last_button))
         
-    def __repr__(self):
+    def __repr__(self) -> str:
         return "GUI buttons: {}".format(self.buttons)
 
 
-def main():
+def main() -> None:
     volume_controller = VolumeController(0, 100)
     volume_controller_gui = VolumeControlGUI()
     
